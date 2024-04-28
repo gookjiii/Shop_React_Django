@@ -1,5 +1,5 @@
 const Order = {
-    numOrders: 2
+    numOrders: 0
 }
 
 export default Order

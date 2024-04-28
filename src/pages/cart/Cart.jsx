@@ -137,32 +137,12 @@ function QuantityButton({ quantity, onQuantityChange }) {
     };
 
     return (
-        <div className="quantity-button">
-            <button className="quantity-button__btn" onClick={handleDecrease}><strong>-</strong></button>
-            <span className="quantity-button__value">{quantity}</span>
-            <button className="quantity-button__btn" onClick={handleIncrease}><strong>+</strong></button>
-            <style jsx>{`
-          :root {
-            --button-bg-color: #F6F7F8; 
-          }
-          .quantity-button {
-            display: flex;
-            align-items: center;
-          }
-          .quantity-button__btn {
-            border: none;
-            padding: 7px;       
-            color: #BF627B;
-            background-color: var(--button-bg-color); 
-          }
-          .quantity-button__value {
-            padding: 5px;
-            background-color: var(--button-bg-color); 
-          }
-          .quantity-button__btn strong {
-            font-weight: 1000;
-          }
-        `}</style>
+        <div className="quantity-btn-container">
+            <div className="quantity-btn">
+                <button className="decrease-btn" onClick={handleDecrease}>-</button>
+                <span className="quantity-display">{quantity}</span>
+                <button className="increase-btn" onClick={handleIncrease}>+</button>
+            </div>
         </div>
     );
 }
@@ -197,6 +177,8 @@ function MyComponent() {
     ]);
 
     const [subtotal, setSubtotal] = useState(0);
+
+    const isEmptyCart = products.length === 0;
 
     useEffect(() => {
         const newSubtotal = products.reduce((total, product) => {
@@ -274,10 +256,24 @@ function MyComponent() {
                     </div>
                 </div>
             )}
+            {isEmptyCart ? (
+                <div className='page404__container container'>
+                <p className='page404__title'>Ничего</p>
+                <h1>Упс! Корзина пуста.</h1>
+                <p className='page404__text'>Добавьте понравившиеся товары из каталога в корзину.</p>
+                <div className="back_btn__container">
+                    <button className="back_btn">
+                        <i className='home-icon uil uil-estate'></i>
+                        <a href='/'>Вернуться домой</a>
+                    </button>
+                </div>
+            </div>
+            ) : (
+                <>
             <div className="product-grid-container">
-                <div className="product-title">PRODUCT</div>
-                <div className="quantity-label">QTY</div>
-                <div className="unit-price-label">UNIT PRICE</div>
+                <div className="product-title">ПРОДУКТ</div>
+                <div className="quantity-label">КОЛ-ВО</div>
+                <div className="unit-price-label">ЦЕНА  </div>
             </div>
             <div className="separator" />
 
@@ -289,8 +285,8 @@ function MyComponent() {
             ))}
             <div className="price-summary">
                 <div className="price-labels">
-                    <div className="subtotal-label">Subtotal</div>
-                    <div className="shipping-label">Shipping fee</div>
+                    <div className="subtotal-label">Сумма</div>
+                    <div className="shipping-label">Доставка</div>
                 </div>
                 <div className="price-values">
                     <div className="subtotal-value">${subtotal}</div>
@@ -299,7 +295,7 @@ function MyComponent() {
             </div>
             <div className="total-separator" />
             <TotalPrice
-                label="TOTAL"
+                label="ИТОГО"
                 subtotal={subtotal}
                 onSubtotalUpdate={handleSubtotalUpdate}
             />
@@ -313,6 +309,7 @@ function MyComponent() {
                 flex-direction: column;
             }
         `}</style>
+        </>)}
         </>
     );
 }

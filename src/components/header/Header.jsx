@@ -182,7 +182,7 @@ const Header = () => {
                     {!isOpen && (
                         <a href='/cart' className="cart__icon">
                             <div className='uil uil-shopping-cart-alt cart-icon-icon'></div>
-                            <span className='num-orders'>{Order.numOrders}</span>
+                            {parseInt(Order.numOrders) > 0 ? <span className='num-orders'>{Order.numOrders}</span> : <div></div>}
                         </a>
                     )}
                 </div>
