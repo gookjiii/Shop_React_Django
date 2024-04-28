@@ -1,0 +1,27 @@
+.detailed-category__container {
+    margin-top: 2rem;
+}
+
+.category-coming-soon {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+}
+
+.category-coming-soon h1 {
+    font-size: 3rem;
+    text-align: center;
+    color:var(--theme-color);
+    margin-bottom: 2rem;
+}
+
+.category-coming-soon p {
+    text-align: center;
+}
+
+
+/* For small devices */
+@media screen and (max-width: 460px) {
+    .detailed-category__container {
+        padding-top: var(--header-height);
+    }
+}

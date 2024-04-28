@@ -1,0 +1,12 @@
+/* For medium devices */
+@media screen and (max-width: 992px) {
+    .home__container {
+        padding-top: calc(var(--header-height) + 1rem);
+    }
+}
+
+.carousel-container {
+    max-width: 90%; 
+    margin: 0 auto; 
+  }
+  

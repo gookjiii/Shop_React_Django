@@ -1,0 +1,51 @@
+/* general breadcrumbs */
+.breadcrumbs {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    background-color: var(--shadow-color);
+    font-size: var(--small-font-size);
+    font-weight: var(--font-normal);
+}
+
+.crumb-link:hover {
+    color: var(--theme-color) !important;
+}
+
+.breadcrumbs>* {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.breadcrumbs .crumb:after {
+    content: '/';
+    margin-left: 10px;
+    font-size: var(--tiny-font-size);
+}
+
+.breadcrumbs .crumb:last-child:after {
+    display: none;
+}
+
+.breadcrumbs .crumb:not(:last-child) a {
+    color: var(--text-color);
+}
+
+.breadcrumbs .crumb:last-child a {
+    color: var(--theme-color);
+}
+
+/* For medium devices */
+@media screen and (max-width: 992px) {
+    .breadcrumbs {
+       padding-top: calc(var(--header-height) + 2rem) !important;
+    }
+}
+
+/* For small devices */
+@media screen and (max-width: 460px) {
+    .breadcrumbs {
+        display: none;
+    }
+}
