@@ -108,22 +108,22 @@ function CheckoutButton({ onClick }) {
     );
 }
 
-const products = [
-    {
-        id: 1,
-        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/61472d8ccde9ec49c2ced7a21659b9bbdaa1deecbdbe3c108a9c72673f17168e?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
-        productName: "Nike Airmax 270 react",
-        unitPrice: "$499",
-        quantity: 1,
-    },
-    {
-        id: 2,
-        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/c566ee1d6bcfbbdc9d6e0410ec5b1647488d0b79c25ef5e867e291fa108d1471?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
-        productName: "Nike Airmax 270 react",
-        unitPrice: "$499",
-        quantity: 1,
-    },
-];
+// const products = [
+//     {
+//         id: 1,
+//         imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/61472d8ccde9ec49c2ced7a21659b9bbdaa1deecbdbe3c108a9c72673f17168e?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
+//         productName: "Nike Airmax 270 react",
+//         unitPrice: "$499",
+//         quantity: 1,
+//     },
+//     {
+//         id: 2,
+//         imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/c566ee1d6bcfbbdc9d6e0410ec5b1647488d0b79c25ef5e867e291fa108d1471?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
+//         productName: "Nike Airmax 270 react",
+//         unitPrice: "$499",
+//         quantity: 1,
+//     },
+// ];
 
 function QuantityButton({ quantity, onQuantityChange }) {
     const handleIncrease = () => {
@@ -159,26 +159,27 @@ function TotalPrice({ label, subtotal, onSubtotalUpdate }) {
 }
 
 function MyComponent() {
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/61472d8ccde9ec49c2ced7a21659b9bbdaa1deecbdbe3c108a9c72673f17168e?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
-            productName: "Nike Airmax 270 react",
-            unitPrice: "$499",
-            quantity: 1,
-        },
-        {
-            id: 2,
-            imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/c566ee1d6bcfbbdc9d6e0410ec5b1647488d0b79c25ef5e867e291fa108d1471?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
-            productName: "Nike Airmax 270 react",
-            unitPrice: "$499",
-            quantity: 1,
-        },
-    ]);
-
+    const [products, setProducts] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
-
+    const [showPopup, setShowPopup] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    
     const isEmptyCart = products.length === 0;
+    
+    useEffect(() => {
+        fetch('https://support.mollywlove.ru/api/view_cart_from_db') 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setProducts(data);
+            })
+            .catch(error => {
+            });
+    }, []);  
 
     useEffect(() => {
         const newSubtotal = products.reduce((total, product) => {
@@ -207,21 +208,34 @@ function MyComponent() {
         setProducts(products.filter(product => product.id !== productId));
     };
 
-    const [showPopup, setShowPopup] = useState(false);
-
     const handleCheckout = () => {
         setShowPopup(true);
     };
 
-    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
     const handleShowSuccessPopup = () => {
-    setShowSuccessPopup(true);
+        setShowSuccessPopup(true);
     };
 
     const handleCloseSuccessPopup = () => {
-    setShowSuccessPopup(false);
+        setShowSuccessPopup(false);
     };
+
+    // const [products, setProducts] = useState([
+    //     {
+    //         id: 1,
+    //         imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/61472d8ccde9ec49c2ced7a21659b9bbdaa1deecbdbe3c108a9c72673f17168e?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
+    //         productName: "Nike Airmax 270 react",
+    //         unitPrice: "$499",
+    //         quantity: 1,
+    //     },
+    //     {
+    //         id: 2,
+    //         imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/c566ee1d6bcfbbdc9d6e0410ec5b1647488d0b79c25ef5e867e291fa108d1471?apiKey=a823bb3ee71445d9895c0391c36ad3f8&",
+    //         productName: "Nike Airmax 270 react",
+    //         unitPrice: "$499",
+    //         quantity: 1,
+    //     },
+    // ]);
 
     return (
             <>
@@ -308,8 +322,8 @@ function MyComponent() {
                 display: flex;
                 flex-direction: column;
             }
-        `}</style>
-        </>)}
+        `}</style> 
+        </>)} 
         </>
     );
 }
